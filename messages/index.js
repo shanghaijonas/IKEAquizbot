@@ -76,7 +76,7 @@ bot.dialog('/', [
         // How to get Skype/FB username
         //session.send('Hello %s!', session.userData.name);
 
-        var address = JSON.stringify(session.message.address);
+        var address = JSON.stringify(session.message.address.channelId);
         session.send(address);
 
         session.beginDialog('/menu');
