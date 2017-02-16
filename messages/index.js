@@ -96,10 +96,10 @@ bot.dialog('/menu', [
     function (session, results) {
         switch (results.response.index) {
             case 0:
-                session.beginDialog('Play game');
+                session.beginDialog('/Play game');
                 break;
             case 1:
-                session.beginDialog('Rules');
+                session.beginDialog('/Rules');
                 break;
             default:
                 session.endDialog();
