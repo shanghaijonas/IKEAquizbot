@@ -93,7 +93,7 @@ bot.dialog('/', [
 // Add root menu dialog
 bot.dialog('/menu', [
     function (session) {
-        builder.Prompts.choice(session, "What do you want to do? (wave) +D :-)", "Play game|Rules|Quit", { listStyle: builder.ListStyle.inline });
+        builder.Prompts.choice(session, "What do you want to do? (wave) 🖤 :-)", "Play game|Rules|Quit", { listStyle: builder.ListStyle.inline });
     },
     function (session, results) {
         switch (results.response.index) {
