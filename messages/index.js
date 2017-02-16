@@ -56,12 +56,12 @@ bot.dialog('/', [
             .attachments([
                 new builder.HeroCard(session)
                     .title("Hero Card")
-                    .subtitle("Space Needle")
-                    .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+                    .subtitle("IKEA quizbot")
+                    .text("The <b>IKEA quizbot</b> is a demo to try out how a chatbot works")
                     .images([
                         builder.CardImage.create(session, "http://www.ikea.com/ms/img/header/logo.gif")
                     ])
-                    .tap(builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle"))
+                    .tap(builder.CardAction.openUrl(session, "http://www.ikea.com/"))
             ]);
         session.send(msg);
 
@@ -74,49 +74,46 @@ bot.dialog('/', [
         var msg = new builder.Message(session).attachments([card]);
         session.send(msg);
         session.send("Hi... I'm the IKEA gaming robot!");
-         session.send('Hello %s!', session.userData.name);
+        
+        // How to get Skype/FB username
+        session.send('Hello %s!', session.userData.name);
 
         session.beginDialog('/menu');
         
     },
     function (session, results) {
-        // Display menu
-        session.beginDialog('/menu');
-    },
-    function (session, results) {
         // Always say goodbye
         session.send("Ok... See you later!");
     }
-    
 
 ]);
 
+// Add root menu dialog
 bot.dialog('/menu', [
     function (session) {
-        //session.userData.profile
-        //var varName='noName';
-        //if (session.userData.profile.name) {
-          // varName=session.userData.profile.name;
-        //}
-        //session.send("Hello %s!", varName);
-
-        builder.Prompts.choice(session, "What do you want to do? (wave)", "Play game|Rules|(quit)", { listStyle: builder.ListStyle.inline });
+        builder.Prompts.choice(session, "What do you want to do? (wave)", "Play game|Rules|Quit", { listStyle: builder.ListStyle.inline });
     },
     function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
-        } else {
-            // Exit the menu
-            session.endDialog();
+        switch (results.response.index) {
+            case 0:
+                session.beginDialog('Play game');
+                break;
+            case 1:
+                session.beginDialog('Rules');
+                break;
+            default:
+                session.endDialog();
+                break;
         }
     },
-    function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
+    function (session) {
+        // Reload menu
         session.replaceDialog('/menu');
     }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+]).reloadAction('showMenu', null, { matches: /^(menu|back)/i });
 
+
+// Rules
 bot.dialog('/Rules', [
     function (session) {
        session.send("The rules of the game are really simple! (wave) (heart)");
@@ -124,6 +121,7 @@ bot.dialog('/Rules', [
     }
 ])
 
+// Play game
 bot.dialog('/Play game', [
     function (session) {
         
@@ -165,10 +163,6 @@ bot.dialog('/Play game', [
             // Exit the game
             session.endDialog();
         }
-    },
-    function (session, results) {
-        session.send("Replace");
-        session.replaceDialog('/ikea');
     }
 ])
 
