@@ -76,9 +76,10 @@ bot.dialog('/', [
         // How to get Skype/FB username
         //session.send('Hello %s!', session.userData.name);
 
-        var address = JSON.stringify(session.message.address.channelId);
-        session.send(address);
-
+        //var address = JSON.stringify(session.message.address.);
+        //var address = JSON.parse(session.message.address)
+        //session.send(address);
+                
         session.beginDialog('/menu');
 
     },
@@ -92,7 +93,7 @@ bot.dialog('/', [
 // Add root menu dialog
 bot.dialog('/menu', [
     function (session) {
-        builder.Prompts.choice(session, "What do you want to do? (wave)", "Play game|Rules|Quit", { listStyle: builder.ListStyle.inline });
+        builder.Prompts.choice(session, "What do you want to do? (wave) +D :-)", "Play game|Rules|Quit", { listStyle: builder.ListStyle.inline });
     },
     function (session, results) {
         switch (results.response.index) {
