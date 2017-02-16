@@ -152,9 +152,10 @@ bot.dialog('/Play game', [
             session.send("You chose '%s'", results.response.entity);
             if (results.response.entity==ikeaproducts[productindex].name){
                 score=score+1;
-                session.send("Your answer is correct.\\n Your score is now: "+score);
+                session.send("Your answer is correct.\n Your score is now: "+score);
+                session.replaceDialog('/Play game');
             } else {
-                session.send("Your answer is wrong.\\n The name of the product is '"+ikeaproducts[productindex].name+"'. Your score was: "+score);
+                session.send("Your answer is wrong.\n The name of the product is '"+ikeaproducts[productindex].name+"'. Your score was: "+score);
                 score=0;
                 session.endDialog();
             }
