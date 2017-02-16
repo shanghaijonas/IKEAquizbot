@@ -20,8 +20,6 @@ var ikeaproducts = [
     { name: "STOCKHOLM", image: "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
     { name: "FJÄLLA",image: "http://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/fjalla-box-with-lid-blue__0321554_PE515969_S4.JPG
     { name: "MÖRBYLÅNGA",image: "http://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"}
-    
-    
 ];
 
 var productindex;
@@ -48,7 +46,7 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
 var bot = new builder.UniversalBot(connector);
 
 bot.dialog('/', [
-     
+
     function (session) {
         // Send a greeting and show help.
         var msg = new builder.Message(session)
@@ -74,12 +72,15 @@ bot.dialog('/', [
         var msg = new builder.Message(session).attachments([card]);
         session.send(msg);
         session.send("Hi... I'm the IKEA gaming robot!");
-        
+
         // How to get Skype/FB username
-        session.send('Hello %s!', session.userData.name);
+        //session.send('Hello %s!', session.userData.name);
+
+        var address = JSON.stringify(session.message.address);
+        session.send(address);
 
         session.beginDialog('/menu');
-        
+
     },
     function (session, results) {
         // Always say goodbye
@@ -124,15 +125,15 @@ bot.dialog('/Rules', [
 // Play game
 bot.dialog('/Play game', [
     function (session) {
-        
+
         session.sendTyping();
-        
+
         var s = shuffleArray(ikeaproducts);
         var nbrAnswers = constNbrAnswers % s.length;
         if (score>3) nbrAnswers = (nbrAnswers+1) % s.length;
-        
+
         productindex = Math.floor(Math.random() * nbrAnswers);
-                
+
         var msg = new builder.Message(session)
             .attachments([{
                 contentType: "image/jpeg",
@@ -144,7 +145,7 @@ bot.dialog('/Play game', [
         for(var i=0;i<nbrAnswers;i++) {
            answers[i]=s[i].name;
         }
-        
+
        builder.Prompts.choice(session, "What IKEA product is this?", answers, { listStyle: builder.ListStyle.button });
     },
     function (session, results) {
@@ -159,7 +160,7 @@ bot.dialog('/Play game', [
                 score=0;
                 session.endDialog();
             }
-         
+
         } else {
             // Exit the game
             session.endDialog();
@@ -175,7 +176,7 @@ if (useEmulator) {
     server.listen(3978, function() {
         console.log('test bot endpont at http://localhost:3978/api/messages');
     });
-    server.post('/api/messages', connector.listen());    
+    server.post('/api/messages', connector.listen());
 } else {
     module.exports = { default: connector.listen() }
 }
