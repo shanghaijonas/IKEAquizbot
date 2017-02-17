@@ -5,7 +5,7 @@ var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 
 var useEmulator = (process.env.NODE_ENV == 'development');
-useEmulator=true;
+//useEmulator=true;
 console.log('Start with emulator: %s', useEmulator);
 
 var ikeaproducts = [
