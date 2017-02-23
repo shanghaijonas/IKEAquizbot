@@ -10,7 +10,7 @@ var fileQuiz = '../quiz.json';
 var obj;
 
 var useEmulator = (process.env.NODE_ENV == 'development');
-useEmulator=true;
+//useEmulator=true;
 console.log('Environment: %s', process.env.NODE_ENV);
 console.log('Start with emulator: %s', useEmulator);
 
