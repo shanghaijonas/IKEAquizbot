@@ -3,45 +3,27 @@
 "use strict";
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
-var jsonfile = require('jsonfile');
+//var jsonfile = require('jsonfile');
 
 var file = '../hiscore.json';
 var fileQuiz = '../quiz.json';
 var obj;
 
-//jsonfile.readFile(fileQuiz, function(err, obj) {
-  //console.dir(obj)
-//})
-
-var kanske = jsonfile.readFileSync(fileQuiz);
-
-//console.log(kanske);
-
-//var obj = {name: 'Jonas', score :'800'}
- 
-//jsonfile.writeFileSync(file, obj, {spaces: 2})
-
-
-
-//jsonfile.writeFile(file, obj, function (err) {
-//  console.error(err)
-//})
-
-//console.log('File: %s', JSON.stringify(obj.name));
-
-
-
-
 var useEmulator = (process.env.NODE_ENV == 'development');
-
-//useEmulator=true;
+useEmulator=true;
 console.log('Environment: %s', process.env.NODE_ENV);
 console.log('Start with emulator: %s', useEmulator);
+
+//var quizgame = jsonfile.readFileSync(fileQuiz);
 
 var quizgame = { "quizgame": {
     "title" : "IKEA botquiz",
     "subtitle": "Subtitles",
-    "rules": "This is the rules",
+    "description": "Description",
+    "img": "http://www.ikea.com/ms/img/header/logo.gif",
+    "rules": "The rules of the game are really simple! (wave) (heart)",
+    "welcome": "Hi... I'm the IKEA gaming robot!",
+    "goodbye": "Ok... Welcome back! Just type hello to wake me up again...",
     "levels": 
       [ 
         {
@@ -49,11 +31,17 @@ var quizgame = { "quizgame": {
         "nbrofquestions" : 5,
         "questions": 
           [
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"}
+		{ "name": "BREIM", "image": "http://www.ikea.com/PIAimages/0291703_PE424963_S3.JPG"}, 
+		{ "name": "SKUBB", "image": "http://www.ikea.com/PIAimages/0277256_PE416198_S3.JPG"},
+		{ "name": "KUPOL", "image": "http://www.ikea.com/cn/en/images/products/kupol-castor-grey__0133605_PE289154_S4.JPG"},
+		{ "name": "NORSBORG", "image": "http://www.ikea.com/PIAimages/0398539_PE564975_S3.JPG"},
+		{ "name": "LISABO", "image": "http://www.ikea.com/PIAimages/0325067_PE523174_S3.JPG"}, 
+		{ "name": "VEJMON", "image": "http://www.ikea.com/PIAimages/0307444_PE427864_S3.JPG"}, 
+		{ "name": "ARKELSTORP", "image": "http://www.ikea.com/PIAimages/0260729_PE404586_S3.JPG"}, 
+		{ "name": "BOKSEL", "image": "http://www.ikea.com/PIAimages/0119835_PE276267_S3.JPG"}, 
+		{ "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
+		{ "name": "FJÄLLA", "image": "http://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, 
+		{ "name": "MÖRBYLÅNGA", "image": "http://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"}
           ]
         },
         {
@@ -71,13 +59,7 @@ var quizgame = { "quizgame": {
       ]
 }};
 
-
-
-var parsed = kanske; //quizgame; //JSON.parse(quizgame);
-console.log('done');
-
-//console.log('levels %s', parsed.quizgame.levels[0].levelname); 
-
+var parsed = quizgame;
 var quizTitle = parsed.quizgame.title;
 var quizSubtitle = parsed.quizgame.subtitle;
 var quizRules = parsed.quizgame.rules;
