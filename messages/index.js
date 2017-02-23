@@ -3,25 +3,92 @@
 "use strict";
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
+var jsonfile = require('jsonfile');
+
+var file = '../hiscore.json';
+var fileQuiz = '../quiz.json';
+var obj;
+
+//jsonfile.readFile(fileQuiz, function(err, obj) {
+  //console.dir(obj)
+//})
+
+var kanske = jsonfile.readFileSync(fileQuiz);
+
+//console.log(kanske);
+
+//var obj = {name: 'Jonas', score :'800'}
+ 
+//jsonfile.writeFileSync(file, obj, {spaces: 2})
+
+
+
+//jsonfile.writeFile(file, obj, function (err) {
+//  console.error(err)
+//})
+
+//console.log('File: %s', JSON.stringify(obj.name));
+
+
+
 
 var useEmulator = (process.env.NODE_ENV == 'development');
-//useEmulator=true;
+
+useEmulator=true;
+console.log('Environment: %s', process.env.NODE_ENV);
 console.log('Start with emulator: %s', useEmulator);
 
-var ikeaproducts = [
-    { name: "BREIM", image: "http://www.ikea.com/PIAimages/0291703_PE424963_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/breim-wardrobe-blue__0291705_PE424964_S4.JPG
-    { name: "SKUBB", image: "http://www.ikea.com/PIAimages/0277256_PE416198_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/skubb-storage-case-white__0277256_PE416198_S4.JPG
-    { name: "KUGGIS", image:"http://www.ikea.com/PIAimages/0372094_PE551690_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/kuggis-box-with-lid-white__0372097_PE551689_S4.JPG
-    { name: "KUPOL", image: "http://www.ikea.com/cn/en/images/products/kupol-castor-grey__0133605_PE289154_S4.JPG"},
-    { name: "NORSBORG", image: "http://www.ikea.com/PIAimages/0398539_PE564975_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/norsborg-chaise-longue-white__0377666_PE558908_S4.JPG
-    { name: "LISABO", image: "http://www.ikea.com/PIAimages/0325067_PE523174_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/lisabo-coffee-table__0326096_PE518132_S4.JPG
-    { name: "VEJMON", image: "http://www.ikea.com/PIAimages/0307444_PE427864_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/vejmon-coffee-table-brown__0089492_PE221833_S4.JPG
-    { name: "ARKELSTORP", image: "http://www.ikea.com/PIAimages/0260729_PE404586_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/arkelstorp-coffee-table-black__0260729_PE404586_S4.JPG
-    { name: "BOKSEL", image: "http://www.ikea.com/PIAimages/0119835_PE276267_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/boksel-coffee-table-white__0119835_PE276267_S4.JPG
-    { name: "STOCKHOLM", image: "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
-    { name: "FJÄLLA",image: "http://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, //http://www.ikea.com/cn/en/images/products/fjalla-box-with-lid-blue__0321554_PE515969_S4.JPG
-    { name: "MÖRBYLÅNGA",image: "http://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"}
-];
+var quizgame = { "quizgame": {
+    "title" : "IKEA botquiz",
+    "subtitle": "Subtitles",
+    "rules": "This is the rules",
+    "levels": 
+      [ 
+        {
+        "levelname": "Easy level",
+        "nbrofquestions" : 5,
+        "questions": 
+          [
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"}
+          ]
+        },
+        {
+        "levelname": "Level 2 - Medium level",
+        "nbrofquestions" : 5,
+        "questions": 
+          [
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"}
+          ]
+        }
+      ]
+}};
+
+
+
+var parsed = kanske; //quizgame; //JSON.parse(quizgame);
+console.log('done');
+
+//console.log('levels %s', parsed.quizgame.levels[0].levelname); 
+
+var quizTitle = parsed.quizgame.title;
+var quizSubtitle = parsed.quizgame.subtitle;
+var quizRules = parsed.quizgame.rules;
+var quizImgURL = parsed.quizgame.img;
+var quizDesc = parsed.quizgame.description;
+var quizWelcome = parsed.quizgame.welcome;
+var quizGoodbye = parsed.quizgame.goodbye;
+
+var ikeaproducts = parsed.quizgame.levels[0].questions;
+
+console.log(ikeaproducts[0].name);
 
 var productindex;
 var score=0, round=0, totalScore=0;
@@ -61,7 +128,7 @@ if (useEmulator) {
     var restify = require('restify');
     var server = restify.createServer();
     server.listen(3978, function() {
-        console.log('test bot endpont at http://localhost:3978/api/messages');
+        console.log('Bot started successfully with endpoint at http://localhost:3978/api/messages');
     });
     server.post('/api/messages', connector.listen());
 } else {
@@ -78,37 +145,33 @@ bot.dialog('/', [
             .textFormat(builder.TextFormat.xml)
             .attachments([
                 new builder.HeroCard(session)
-                    .title("Hero Card")
-                    .subtitle("IKEA quizbot")
-                    .text("The <b>IKEA quizbot</b> is a demo to try out how a chatbot works")
+                    .title(quizTitle)
+                    .subtitle(quizSubtitle)
+                    .text(quizDesc)
                     .images([
-                        builder.CardImage.create(session, "http://www.ikea.com/ms/img/header/logo.gif")
+                        builder.CardImage.create(session, quizImgURL)
                     ])
-                    .tap(builder.CardAction.openUrl(session, "http://www.ikea.com/"))
+                    //.tap(builder.CardAction.openUrl(session, "http://www.ikea.com/"))
             ]);
         session.send(msg);
 
-        var card = new builder.HeroCard(session)
-            .title("IKEA guess the product :-)")
-            .text("We give you the product image, you guess the name.")
-            .images([
-                 builder.CardImage.create(session, "http://www.ikea.com/ms/img/header/logo.gif")
-            ]);
-        var msg = new builder.Message(session).attachments([card]);
-        session.send(msg);
-        session.send("Hi... I'm the IKEA gaming robot!");
+        session.send(quizWelcome);
 
-        // How to get Skype/FB
+        // Setup game
+
+
+        // How to get Skype/FB user
         var address = JSON.stringify(session.message.address);
         var address2 = JSON.parse(address);
-        session.send("MSG: %s", address2["channelId"]);
+        //session.send("MSG: %s", address2["channelId"]);
+        session.send("MSG: %s", JSON.parse(address));
                 
         session.beginDialog('/menu');
 
     },
     function (session, results) {
         // Always say goodbye
-        session.send("Ok... See you later!");
+        session.send(quizgoodbye);
     }
 
 ]);
@@ -116,7 +179,7 @@ bot.dialog('/', [
 // Add root menu dialog
 bot.dialog('/menu', [
     function (session) {
-        builder.Prompts.choice(session, "What do you want to do? (wave) 🖤 :-)", "Play game|Rules|Quit", { listStyle: builder.ListStyle.inline });
+        builder.Prompts.choice(session, "What do you want to do? (wave) 🖤 :-)", "Play game|Rules|See hiscore|Quit", { listStyle: builder.ListStyle.list });
     },
     function (session, results) {
         switch (results.response.index) {
@@ -126,6 +189,9 @@ bot.dialog('/menu', [
                 break;
             case 1:
                 session.beginDialog('/Rules');
+                break;
+            case 2:
+                session.beginDialog('/ListHiscore');
                 break;
             default:
                 session.endDialog();
@@ -138,11 +204,19 @@ bot.dialog('/menu', [
     }
 ]).reloadAction('showMenu', null, { matches: /^(menu|back)/i });
 
+// List hiscore
+bot.dialog('/Listhiscore', [
+    function (session) {
+       session.send("This will list the hiscore");
+       session.endDialog();
+    }
+])
+
 
 // Rules
 bot.dialog('/Rules', [
     function (session) {
-       session.send("The rules of the game are really simple! (wave) (heart)");
+       session.send(quizRules);
        session.endDialog();
     }
 ])

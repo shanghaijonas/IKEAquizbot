@@ -1,0 +1,44 @@
+{ "quizgame": {
+    "title" : "IKEA botquiz",
+    "subtitle": "Subtitles",
+    "description": "Description",
+    "img": "http://www.ikea.com/ms/img/header/logo.gif",
+    "rules": "The rules of the game are really simple! (wave) (heart)",
+    "welcome": "Hi... I'm the IKEA gaming robot!",
+    "goodbye": "Ok... Welcome back! Just type hello to wake me up again...",
+    "levels": 
+      [ 
+        {
+        "levelname": "Easy level",
+        "nbrofquestions" : 5,
+        "questions": 
+          [
+		{ "name": "BREIM", "image": "http://www.ikea.com/PIAimages/0291703_PE424963_S3.JPG"}, 
+		{ "name": "SKUBB", "image": "http://www.ikea.com/PIAimages/0277256_PE416198_S3.JPG"},
+		{ "name": "KUPOL", "image": "http://www.ikea.com/cn/en/images/products/kupol-castor-grey__0133605_PE289154_S4.JPG"},
+		{ "name": "NORSBORG", "image": "http://www.ikea.com/PIAimages/0398539_PE564975_S3.JPG"},
+		{ "name": "LISABO", "image": "http://www.ikea.com/PIAimages/0325067_PE523174_S3.JPG"}, 
+		{ "name": "VEJMON", "image": "http://www.ikea.com/PIAimages/0307444_PE427864_S3.JPG"}, 
+		{ "name": "ARKELSTORP", "image": "http://www.ikea.com/PIAimages/0260729_PE404586_S3.JPG"}, 
+		{ "name": "BOKSEL", "image": "http://www.ikea.com/PIAimages/0119835_PE276267_S3.JPG"}, 
+		{ "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
+		{ "name": "FJÄLLA", "image": "http://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, 
+		{ "name": "MÖRBYLÅNGA", "image": "http://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"}
+          ]
+        },
+        {
+        "levelname": "Level 2 - Medium level",
+        "nbrofquestions" : 5,
+        "questions": 
+          [
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"},
+            { "q1" : "k" , "image" : "url"}
+          ]
+        }
+      ]
+}}
+
+
