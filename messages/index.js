@@ -11,6 +11,7 @@ var obj;
 
 var environment = process.env.NODE_ENV || 'development';
 var useEmulator = (environment == 'development');
+useEmulator = false;
 
 console.log('Environment: %s', process.env.NODE_ENV);
 console.log('Start with emulator: %s', useEmulator);
