@@ -9,8 +9,9 @@ var file = '../hiscore.json';
 var fileQuiz = '../quiz.json';
 var obj;
 
-var useEmulator = (process.env.NODE_ENV == 'development');
-//useEmulator=true;
+var environment = process.env.NODE_ENV || 'development';
+var useEmulator = (environment == 'development');
+
 console.log('Environment: %s', process.env.NODE_ENV);
 console.log('Start with emulator: %s', useEmulator);
 
@@ -49,11 +50,11 @@ var quizgame = { "quizgame": {
         "nbrofquestions" : 5,
         "questions": 
           [
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"},
-            { "q1" : "k" , "image" : "url"}
+            { "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
+		   { "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
+              { "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
+                 { "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
+                    { "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"}
           ]
         }
       ]
@@ -73,7 +74,7 @@ var ikeaproducts = parsed.quizgame.levels[0].questions;
 console.log(ikeaproducts[0].name);
 
 var productindex;
-var score=0, round=0, totalScore=0;
+var score=0, round=0, totalScore=0, gamelevel=0;
 var startTime, endTime;
 const constNbrAnswers = 3; //Must be lower then the number of products
 
@@ -122,6 +123,12 @@ var bot = new builder.UniversalBot(connector);
 bot.dialog('/', [
 
     function (session) {
+        session.userData.test = "jonas";
+        session.send(session.userData.test)     
+    }
+
+]);
+/*
         // Send a greeting and show help.
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
@@ -139,21 +146,18 @@ bot.dialog('/', [
 
         session.send(quizWelcome);
 
-        // Setup game
-
-
         // How to get Skype/FB user
-        var address = JSON.stringify(session.message.address);
+        var address = JSON.stringify(session.message.source);
         var address2 = JSON.parse(address);
         //session.send("MSG: %s", address2["channelId"]);
-        session.send("MSG: %s", JSON.parse(address));
+        //session.send("MSG: %s", JSON.parse(address));
                 
         session.beginDialog('/menu');
 
     },
     function (session, results) {
         // Always say goodbye
-        session.send(quizgoodbye);
+        session.send(quizGoodbye);
     }
 
 ]);
@@ -161,6 +165,7 @@ bot.dialog('/', [
 // Add root menu dialog
 bot.dialog('/menu', [
     function (session) {
+        session.send(session.userData.test);
         builder.Prompts.choice(session, "What do you want to do? (wave) 🖤 :-)", "Play game|Rules|See hiscore|Quit", { listStyle: builder.ListStyle.list });
     },
     function (session, results) {
@@ -203,6 +208,7 @@ bot.dialog('/Rules', [
     }
 ])
 
+
 // Play game
 bot.dialog('/Play game', [
     
@@ -210,11 +216,31 @@ bot.dialog('/Play game', [
         
         session.sendTyping();
 
+        gamelevel = 0;
+        session.beginDialog('/Playing', gamelevel)
+       
+    }
+])
+
+
+// Play game
+bot.dialog('/Playing', [
+    
+    function (session, gamelvl) {
+        
+        console.log(parsed.quizgame.levels[gamelvl].levelname)
+
+        ikeaproducts = parsed.quizgame.levels[gamelvl].questions;
+
         var s = shuffleArray(ikeaproducts);
         var nbrAnswers = constNbrAnswers % s.length;
 
         round=round+1;
         if (round>3) nbrAnswers = (nbrAnswers+1) % s.length;
+
+        if (round>1) {
+            gamelvl=1;
+        }
 
         productindex = Math.floor(Math.random() * nbrAnswers);
 
@@ -226,28 +252,6 @@ bot.dialog('/Play game', [
             ]);
         var msg = new builder.Message(session).attachments([card]);
 
-       /* var msg = new builder.Message(session)
-            //.title('Hello')
-            //.subtitle('Subtitle')
-            //.text('Text')
-            .attachments([{
-                contentType: "image/jpeg",
-                contentUrl: s[productindex].image
-            }]);*/
-        
-        /*var msg = new builder.Message(session)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments(new builder.HeroCard(session)
-                    .title('What IKEA furnitures is this?')
-                    .subtitle('Subtitle')
-                    .text('The text')
-                    .images([
-                        builder.CardImage.create(session, s[productindex].image)
-                    ])
-                    .buttons([
-                        builder.CardAction.openUrl(session, 'https://azure.microsoft.com/en-us/services/storage/', 'Learn More')
-                    ]));*/
-
         session.send(msg);
 
         var answers=[];
@@ -257,7 +261,7 @@ bot.dialog('/Play game', [
 
         startTime = new Date().getTime();
         //builder.Prompts.choice(session, "Round: " + round + " - What IKEA product is this?", answers, { listStyle: builder.ListStyle.button });        
-        builder.Prompts.choice(session, "", answers, { listStyle: builder.ListStyle.button });        
+        builder.Prompts.choice(session, ["Pick an answer", "Pick"], answers, { listStyle: builder.ListStyle.button });        
     },
     function (session, results) {
          if (results.response && results.response.entity != 'quit') {
@@ -273,7 +277,7 @@ bot.dialog('/Play game', [
 
                 totalScore=totalScore+score;
                 session.send("Your answer is correct.\n Your total score is now: %s.", totalScore);
-                session.replaceDialog('/Play game');
+                session.replaceDialog('/Playing', 1);
             } else {
                 session.send("Your answer is wrong.\n The name of the product is '"+ikeaproducts[productindex].name+"'. Your score was: "+totalScore);
                 totalScore=0;
@@ -287,3 +291,5 @@ bot.dialog('/Play game', [
     }
 ])
 
+
+*/
