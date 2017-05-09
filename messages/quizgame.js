@@ -1,10 +1,10 @@
-
+﻿
 module.exports = {
 
     quizgame: function() {
 
     return({ "quizgame": {
-        "title" : "IKEA botquiz",
+        "title" : "IKEA botquiz - the new version",
         "subtitle": "Do you know your IKEA furniture?",
         "description": "This is a simple game where you get to test your knowledge about the name of different IKEA furniture.",
         "img": "https://www.ikea.com/ms/img/header/logo.gif",
