@@ -7,9 +7,9 @@ module.exports = {
         "title" : "IKEA botquiz",
         "subtitle": "Do you know your IKEA furniture?",
         "description": "This is a simple game where you get to test your knowledge about the name of different IKEA furniture.",
-        "img": "http://www.ikea.com/ms/img/header/logo.gif",
-        "rules": "The rules of the game are really simple! (wave) (heart)",
-        "welcome": "Hi... I'm the IKEA gaming robot! ",
+        "img": "https://www.ikea.com/ms/img/header/logo.gif",
+        "rules": "The rules of the game are really simple!",
+        "welcome": "Hi... I'm the IKEA gaming robot!  (wave)",
         "goodbye": "Ok... Welcome back! Just type hello to wake me up again...",
         "levels": 
         [ 
@@ -19,18 +19,18 @@ module.exports = {
             "questions": 
             [
             // Mixed
-            { "name": "BREIM", "image": "http://www.ikea.com/PIAimages/0291703_PE424963_S3.JPG"}, 
-            { "name": "SKUBB", "image": "http://www.ikea.com/PIAimages/0277256_PE416198_S3.JPG"},
-            { "name": "KUPOL", "image": "http://www.ikea.com/cn/en/images/products/kupol-castor-grey__0133605_PE289154_S4.JPG"},
-            { "name": "BOKSEL", "image": "http://www.ikea.com/PIAimages/0119835_PE276267_S3.JPG"}, 
-            { "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
-            { "name": "FJÄLLA", "image": "http://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, 
+            { "name": "BREIM", "image": "https://www.ikea.com/PIAimages/0291703_PE424963_S3.JPG"}, 
+            { "name": "SKUBB", "image": "https://www.ikea.com/PIAimages/0277256_PE416198_S3.JPG"},
+            { "name": "KUPOL", "image": "https://www.ikea.com/cn/en/images/products/kupol-castor-grey__0133605_PE289154_S4.JPG"},
+            { "name": "BOKSEL", "image": "https://www.ikea.com/PIAimages/0119835_PE276267_S3.JPG"}, 
+            { "name": "STOCKHOLM", "image": "https://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
+            { "name": "FJÄLLA", "image": "https://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, 
 
             // Tables
-            { "name": "LISABO", "image": "http://www.ikea.com/PIAimages/0325067_PE523174_S3.JPG"}, 
-            { "name": "VEJMON", "image": "http://www.ikea.com/PIAimages/0307444_PE427864_S3.JPG"}, 
-            { "name": "ARKELSTORP", "image": "http://www.ikea.com/PIAimages/0260729_PE404586_S3.JPG"}, 
-            { "name": "MÖRBYLÅNGA", "image": "http://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"},
+            { "name": "LISABO", "image": "https://www.ikea.com/PIAimages/0325067_PE523174_S3.JPG"}, 
+            { "name": "VEJMON", "image": "https://www.ikea.com/PIAimages/0307444_PE427864_S3.JPG"}, 
+            { "name": "ARKELSTORP", "image": "https://www.ikea.com/PIAimages/0260729_PE404586_S3.JPG"}, 
+            { "name": "MÖRBYLÅNGA", "image": "https://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"},
            
             // Chairs
             { "name": "GAMLEBY", "image": "http://www.ikea.com/PIAimages/0292758_PE425389_S3.JPG"},

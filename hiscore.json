@@ -1,0 +1,10 @@
+{
+  "array": [
+    { "name" : "Jonas", "score" : "500"},
+    { "name" : "Jonas", "score" : "400"},
+    { "name" : "Jonas", "score" : "300"},
+    { "name" : "Jonas", "score" : "200"},
+    { "name" : "Jonas", "score" : "100"}
+    
+  ]
+}

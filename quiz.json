@@ -1,5 +1,5 @@
-{ "quizgame": {
-    "title" : "IKEA botquiz",
+ï»¿{ "quizgame": {
+    "title" : "IKEA botquiz - new version",
     "subtitle": "Subtitles",
     "description": "Description",
     "img": "http://www.ikea.com/ms/img/header/logo.gif",
@@ -22,8 +22,18 @@
 		{ "name": "ARKELSTORP", "image": "http://www.ikea.com/PIAimages/0260729_PE404586_S3.JPG"}, 
 		{ "name": "BOKSEL", "image": "http://www.ikea.com/PIAimages/0119835_PE276267_S3.JPG"}, 
 		{ "name": "STOCKHOLM", "image": "http://www.ikea.com/cn/en/images/products/stockholm-bedside-table-yellow__0177064_PE329944_S4.JPG"},
-		{ "name": "FJÄLLA", "image": "http://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, 
-		{ "name": "MÖRBYLÅNGA", "image": "http://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"}
+		{ "name": "FJÃ–LLA", "image": "http://www.ikea.com/PIAimages/0321583_PE515950_S3.JPG"}, 
+		{ "name": "MÃ–RBYLÃ…NGA", "image": "http://www.ikea.com/PIAimages/0364486_PE548340_S3.JPG"},
+		{ "name": "WILLMA", "image": "http://www.ikea.com/PIAimages/0214682_PE370791_S3.JPG"},
+    { "name": "NIELS", "image": "http://www.ikea.com/PIAimages/0368622_PE549628_S3.JPG"},
+    { "name": "NICE", "image": "http://www.ikea.com/PIAimages/74032_PE190779_S3.JPG"},
+    { "name": "YANNING", "image": "http://www.ikea.com/PIAimages/0325073_PE517376_S3.JPG"},
+    { "name": "NORAS", "image": "http://www.ikea.com/PIAimages/0105947_PE253719_S3.JPG"},
+    { "name": "NORÃ…KER", "image": "http://www.ikea.com/PIAimages/0440364_PE592358_S3.JPG"},
+    { "name": "REVEREND", "image": "http://www.ikea.com/PIAimages/0376675_PE553888_S3.JPG"},
+    { "name": "BRADEN", "image": "http://www.ikea.com/PIAimages/0530611_PE646778_S3.JPG"},
+    { "name": "STOCKSUND", "image": "http://www.ikea.com/PIAimages/0405175_PE575065_S3.JPG"},
+    { "name": "KLIPPAN", "image": "http://www.ikea.com/PIAimages/0239989_PE379592_S3.JPG"}
           ]
         },
         {

@@ -4,7 +4,7 @@
   "description": "This is a quizbot!",
   "main": "index.js",
   "dependencies": {
-    "botbuilder": "^3.4.2",
+    "botbuilder": "^3.8.0",
     "botbuilder-azure": "0.0.1",
     "jsonfile": "^2.4.0"
   },

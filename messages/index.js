@@ -13,13 +13,13 @@ var hiscore = [
     { "username" : "Player 2", "score" : 0},
     { "username" : "Player 3", "score" : 0},
     { "username" : "Player 4", "score" : 0},
-    { "username" : "Player 5", "score" : 0}    
+    { "username" : "Player 5", "score" : 0},    
+    { "username" : "Player 6", "score" : 0},   
+    { "username" : "Player 7", "score" : 0},  
+    { "username" : "Player 8", "score" : 0}, 
+    { "username" : "Player 9", "score" : 0},    
+    { "username" : "Player 10", "score" : 0}    
   ];
-
-hiscore.push({ "username" : "Jonas1", "score" : 600});
-hiscore.push({ "username" : "Jonas2", "score" : 200});
-hiscore.push({ "username" : "Jonas3", "score" : 800});
-
 
 
 var file = '../hiscore.json';
@@ -96,7 +96,7 @@ bot.dialog('/', [
 
     function (session) {
      
-        // Send a greeting and show help.
+        // Send a greeting message.
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
             .attachments([
@@ -110,7 +110,7 @@ bot.dialog('/', [
                     //.tap(builder.CardAction.openUrl(session, "http://www.ikea.com/"))
             ]);
         session.send(msg);
-
+        
         session.send(quizWelcome);
 
         // How to get Skype/FB user
@@ -132,7 +132,7 @@ bot.dialog('/', [
 // Add root menu dialog
 bot.dialog('/menu', [
     function (session) {        
-        builder.Prompts.choice(session, "What do you want to do? (wave) 🖤 :-)", "Play game|Rules|See hiscore|Quit", { listStyle: builder.ListStyle.list });
+        builder.Prompts.choice(session, "What do you want to do? (wave) 🖤 :-)", "Play game|Rules|See hiscore|Set username|Quit", { listStyle: builder.ListStyle.list });
     },
     function (session, results) {
         switch (results.response.index) {
@@ -145,6 +145,9 @@ bot.dialog('/menu', [
                 break;
             case 2:
                 session.beginDialog('/ListHiscore');
+                break;
+            case 3:
+                session.beginDialog('/SetUsername');
                 break;
             default:
                 session.endDialog();
@@ -159,22 +162,21 @@ bot.dialog('/menu', [
 
 // List hiscore
 bot.dialog('/ListHiscore', [
-    function (session) {
-       session.send("This will list the hiscore");
-       var msg ='';
+    function (session) {       
+       var msg ='This is the current hiscore:\n\n';
 
         hiscore.sort(function(a,b) {
             return b.score - a.score });
 
-       for(var i=0; i<hiscore.length; i++) {
+       for(var i=0; i<Math.min(hiscore.length, 10); i++) {
            
-            msg = msg + i + '. ' + hiscore[i].username + ':' + hiscore[i].score + '\n\n';
+            msg = msg + (i+1) + '. ' + hiscore[i].username + '\t\t' + hiscore[i].score + '\n';
        }
 
        session.send(msg);
        session.endDialog();
     }
-])
+]);
 
 
 // Rules
@@ -183,7 +185,18 @@ bot.dialog('/Rules', [
        session.send(quizRules);
        session.endDialog();
     }
-])
+]);
+
+bot.dialog('/SetUsername', [
+    function (session) {
+        builder.Prompts.text(session, 'What is your name?');
+    },
+    function (session, results) {
+        session.userData.name = results.response;
+        session.send('Your username is now set to "%s"', session.userData.name)
+        session.endDialog();
+    }
+]);
 
 
 // Play game
@@ -202,7 +215,7 @@ bot.dialog('/Play game', [
         
       //  session.send('Score: %s', results.round);
     //}
-])
+]);
 
 
 // Play game
@@ -252,7 +265,7 @@ bot.dialog('/Playing', [
         session.dialogData.g = g;
 
         //builder.Prompts.choice(session, "Round: " + round + " - What IKEA product is this?", answers, { listStyle: builder.ListStyle.button });        
-        builder.Prompts.choice(session, ["Pick an answer", "Choose an answer", "Take your pick"], answers, { listStyle: builder.ListStyle.button });        
+        builder.Prompts.choice(session, ["Pick an answer!", "Choose an answer!", "Take your pick!"], answers, { listStyle: builder.ListStyle.button });        
     },
     function (session, results) {
          if (results.response && results.response.entity != 'quit') {
@@ -267,7 +280,7 @@ bot.dialog('/Playing', [
                 console.log(score);
 
                 totalScore=totalScore+score;
-                session.send("Your answer is correct.\n You got %s points. Your total score is now %s.", score, totalScore);
+                session.send("Your answer is correct. You got %s points. Your total score is now %s.", score, totalScore);
 
                 console.log(quizgame.quizgame.levels[session.dialogData.g.level].nbrofquestions);
 
@@ -282,7 +295,8 @@ bot.dialog('/Playing', [
                 session.send("Your answer is wrong.\n The name of the product is '"+ikeaproducts[productindex].name+"'. Your score was: "+totalScore);
                 
                 // Save hiscore - should use username id and save into DB or disk
-                hiscore.push({ "username" : session.message.user.name , "score" : totalScore});
+                var username = session.userData.name ? session.userData.name : session.message.user.name
+                hiscore.push({ "username" : username , "score" : totalScore});
                 totalScore=0;
                 
                 session.endDialogWithResult(session.dialogData.g);
@@ -293,6 +307,6 @@ bot.dialog('/Playing', [
             session.endDialog();
         }
     }
-])
+]);
 
 
